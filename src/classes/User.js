@@ -16,7 +16,7 @@ class User {
             const sqlQuery = new sqlQueryBuilder()            
                                  .select('*')
                                  .from(process.env.TABLE_USERS)
-                                 .where({Email: emailAddress})
+                                 .where({Email_Address: emailAddress})
                                  .get()
             
             const results = await db.query(sqlQuery.sqlStatement, sqlQuery.values)
@@ -43,7 +43,7 @@ class User {
 
             let permissionsRawData, permissionsParsed            
             if (includePermissions) {
-                permissionsRawData = fs.readFileSync(config.usersFolderPath + '/' + results.results[0].Email + '/permissions.json')
+                permissionsRawData = fs.readFileSync(config.usersFolderPath + '/' + results.results[0].Email_Address + '/permissions.json')
                 permissionsParsed = JSON.parse(permissionsRawData)
 
                 data.user.permissions = permissionsParsed
@@ -66,7 +66,7 @@ class User {
             const data = {
                 userTokenFields : {
                     accountExpiresAt: user.Expires_At,
-                    email: user.Email,
+                    emailAddress: user.Email_Address,
                     avatar: user.Avatar,
                     site: user.Site,
                     homePage: user.Home_Page,
@@ -161,7 +161,7 @@ class User {
               return verifyTokenResult
             }        
             
-            const emailAddress = verifyTokenResult.decryptedData.email    
+            const emailAddress = verifyTokenResult.decryptedData.emailAddress
             const rememberMe = verifyTokenResult.decryptedData.rememberMe
 
             const encryptPasswordResult = new Password().encryptPassword(newPassword)
@@ -171,7 +171,7 @@ class User {
             const sqlQuery = new sqlQueryBuilder()
                                  .update(process.env.TABLE_USERS)
                                  .set({ Password: encryptedPassword, Password2: newPassword, Salt: salt, Should_Change_Password: 0 })
-                                 .where({ Email: emailAddress })
+                                 .where({ Email_Address: emailAddress })
                                  .get()
 
             const updatePasswordResult= await new DB().query(sqlQuery.sqlStatement, sqlQuery.values)
