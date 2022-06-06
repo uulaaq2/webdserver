@@ -61,6 +61,8 @@ class Token {
         decryptedData: result
       }
 
+      console.log(data)
+
       return setSuccess(data)
       
     } catch (error) {

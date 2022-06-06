@@ -51,9 +51,9 @@ async function main(){
     [email2, permissionName2, permissionLabel2, actions2, site2]
   ]
   
-  const aaa = await permissions.addUserPermissions(fields, values)
+  //const aaa = await permissions.addUserPermissions(fields, values)
     
-    console.log(aaa)  
+    //console.log(aaa)  
 
 }
 

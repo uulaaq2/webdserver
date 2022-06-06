@@ -47,10 +47,8 @@ class User {
                 permissionsParsed = JSON.parse(permissionsRawData)
 
                 data.user.permissions = permissionsParsed
-            }      
-            
-            console.log(data)
-            
+            }                  
+           
             return setSuccess(data)
         // end of try
         } catch (error) {
@@ -65,13 +63,9 @@ class User {
         try {
             const data = {
                 userTokenFields : {
-                    accountExpiresAt: user.Expires_At,
-                    emailAddress: user.Email_Address,
-                    avatar: user.Avatar,
-                    site: user.Site,
-                    homePage: user.Home_Page,
-                    canBeRemembered: user.Can_Be_Remembered,                    
-                    shouldChangePassword: user.Should_Change_Password,
+                    ID: user.ID,
+                    Email_Address: user.Email_Address,
+                    Expires_At: user.Expires_At,
                     rememberMe
                 }
             }
@@ -284,7 +278,7 @@ class User {
                 return verifyTokenResult
             }
            
-            const getUserByEmailResult = await this.getUserByEmail(verifyTokenResult.decryptedData.email)
+            const getUserByEmailResult = await this.getUserByEmail(verifyTokenResult.decryptedData.Email_Address)
 
             const data = {
                 token: clientToken,

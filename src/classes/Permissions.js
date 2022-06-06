@@ -9,7 +9,7 @@ class Permissions {
       const tableUserPermissions = process.env.TABLE_PERMISSION_USER    
 
       const preparedSQL = new SQLQueryBuilder()            
-                                  .insert(tableUserPermissions)
+                                  .insertIgnore(tableUserPermissions)
                                   .setFieldsforMultipleValues(fields)
                                   .setMultipleValues(values)
                                   .get()     
@@ -28,7 +28,7 @@ class Permissions {
       const tableDepartmentPermissions = process.env.TABLE_PERMISSION_DEPARTMENT
 
       const preparedSQL = new SQLQueryBuilder()            
-                                  .insert(tableDepartmentPermissions)
+                                  .insertIgnore(tableDepartmentPermissions)
                                   .setFieldsforMultipleValues(fields)
                                   .setMultipleValues(values)
                                   .get()     
@@ -47,7 +47,26 @@ class Permissions {
       const tableGroupPermissions = process.env.TABLE_PERMISSION_GROUP
 
       const preparedSQL = new SQLQueryBuilder()            
-                                  .insert(tableGroupPermissions)
+                                  .insertIgnore(tableGroupPermissions)
+                                  .setFieldsforMultipleValues(fields)
+                                  .setMultipleValues(values)
+                                  .get()     
+      
+      const db = new DB()
+      await db.query(preparedSQL.sqlStatement, [preparedSQL.values])
+
+      return setSuccess()
+    } catch (error) {
+      return setError(error)      
+    }
+  }  
+
+  async addPermissionLinks(fields, values) {
+    try {
+      const tablePermissionLinks = process.env.TABLE_PERMISSION_LINKS
+
+      const preparedSQL = new SQLQueryBuilder()            
+                                  .insertIgnore(tablePermissionLinks)
                                   .setFieldsforMultipleValues(fields)
                                   .setMultipleValues(values)
                                   .get()     

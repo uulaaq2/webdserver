@@ -34,13 +34,9 @@ class DB {
     async query(sqlStatement = '', values = []) {
         // start of promise
         return new Promise((resolve, reject) => {
-            console.log(sqlStatement)
-            console.log(values)
             // start of query
             DB.connection.query(sqlStatement, values, (error, results) => {
 
-                console.log(error)
-                console.log(results)
                 // check if there is error
                 if (error) {
                     resolve(setError(error))
