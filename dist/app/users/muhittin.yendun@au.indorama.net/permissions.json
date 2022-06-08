@@ -1,12 +1,19 @@
-{
-  "app": {
-    "settings": {
+{  
+  "home": {
+
+  },
+  "settings": {
+    "users": {
+
+    },
+    "departments": {
+
+    },
+    "groups": {
 
     }
   },
-  "user": {
-    "userProfile": {
-      "edit": true
-    }
-  }
+  "userProfile": {
+
+  }  
 }
