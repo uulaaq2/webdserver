@@ -92,9 +92,12 @@ router.post('/me/verifytoken', cors(), headers, function(req, res) {
       return
     }
 
+    const token = req.body.token
+    const site = req.body.site
+
     const main = async () => {
       const user = new User()
-      const verifyTokenResult = await user.verifyUserToken(req.body.token, req.body.includeUserData || false)
+      const verifyTokenResult = await user.verifyUserToken(token, site)
       res.send(verifyTokenResult)
     }
   

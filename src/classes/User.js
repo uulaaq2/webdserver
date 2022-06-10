@@ -10,7 +10,7 @@ const fs = require('fs')
 class User {
 
     // start of getUserByEmail function
-    async getUserByEmail(emailAddress, includePermissions = true) {
+    async getUserByEmail(emailAddress, includePermissions = true, site) {
         try {
             const db = new DB()            
             const sqlQuery = new sqlQueryBuilder()            
@@ -42,8 +42,17 @@ class User {
             }
 
             let permissionsRawData, permissionsParsed            
+            const sites = results.results[0].Sites.split(',')
+            let localSite
+            if (!site) {
+                localSite = sites[0]
+            } else {
+                localSite = site
+            }
+
             if (includePermissions) {
-                permissionsRawData = fs.readFileSync(config.usersFolderPath + '/' + results.results[0].Email_Address + '/permissions.json')
+                console.log(config.usersFolderPath + '/' + results.results[0].Email_Address + '/' + localSite + '/permissions.json')
+                permissionsRawData = fs.readFileSync(config.usersFolderPath + '/' + results.results[0].Email_Address + '/' + localSite + '/permissions.json')
                 permissionsParsed = JSON.parse(permissionsRawData)
 
                 data.user.permissions = permissionsParsed
@@ -102,9 +111,9 @@ class User {
         }
     }
 
-    async signIn(emailAddress, password, rememberMe) {
+    async signIn(emailAddress, password, rememberMe, site) {
         try {
-            const userResult = await this.getUserByEmail(emailAddress)
+            const userResult = await this.getUserByEmail(emailAddress, site)
 
             if (userResult.status !== 'ok') {
                 return userResult
@@ -268,7 +277,7 @@ class User {
     // end of verifyUserPassword
     }
 
-    async verifyUserToken(clientToken) {
+    async verifyUserToken(clientToken, site) {
         try {
             const token = new Token()
             const verifyTokenResult = token.verifyToken(clientToken)
@@ -278,7 +287,7 @@ class User {
                 return verifyTokenResult
             }
            
-            const getUserByEmailResult = await this.getUserByEmail(verifyTokenResult.decryptedData.Email_Address)
+            const getUserByEmailResult = await this.getUserByEmail(verifyTokenResult.decryptedData.Email_Address, true, site)
 
             const data = {
                 token: clientToken,
