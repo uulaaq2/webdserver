@@ -1,14 +1,8 @@
-const Permission = require('./Permissions')
+const Groups = require('./Groups')
 
 async function start() {
-  const permissions = new Permissions()
-  const email = 'muhittin.yendun@au.indorama.net'
-  const permissionName = 'userProfile'
-  const permissionLabel = 'User profile'
-  const actions = 'Edit, aaa, bbb'
-  const site = 'Botany'
-  
-  return await permissions.addUserPermission(email, permissionName, permissionLabel, actions, site)
+ const aaa = await new Groups().get('','','Botany')
+ console.log(aaa)
 }
 
 start()

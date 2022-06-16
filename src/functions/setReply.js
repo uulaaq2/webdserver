@@ -59,6 +59,12 @@ const setError = (error) => {
         message: error.message
     }
 
+    for (let key in error) {
+        if (error.hasOwnProperty(key) && (key !== 'status' && key !== 'message')) {
+            reply[key] = error[key]
+        }
+    }
+
     if (showServerDevelopmentErrors) {
         reply.stack = error.stack
     }

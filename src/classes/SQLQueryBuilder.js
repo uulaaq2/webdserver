@@ -73,9 +73,11 @@ class SQLQueryBuilder {
             let tempFields = []         
     
             for (let key in whereFields) {
-                if (whereFields.hasOwnProperty(key)) {
-                   tempFields.push(`${key}=?`)
-                   this.values.push(whereFields[key])
+                if (whereFields[key]) {
+                    if (whereFields.hasOwnProperty(key)) {
+                        tempFields.push(`${key}=?`)
+                        this.values.push(whereFields[key])
+                    }
                 }
             }
     
@@ -106,8 +108,10 @@ class SQLQueryBuilder {
         }
 
         orderBy(orderByFields) {
-            this.pieces.push(`ORDER BY ${orderByFields}`)
-
+            if (orderByFields) {
+                this.pieces.push(`ORDER BY ${orderByFields}`)
+            }
+            
             return this
         }
     
