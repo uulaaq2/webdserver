@@ -8,7 +8,7 @@ import config from '../config'
 
 class Groups {
   // start of getGroups function 
-  async getGroups(name, orderByFields, site) {
+  async getGroups(name, orderByFields, order, site) {
     try {
  
       const db = new DB() 
@@ -17,12 +17,15 @@ class Groups {
                            .from(process.env.TABLE_GROUPS)
                            .where({Name: name, Site: site})
                            .orderBy(orderByFields)
-                           .get()    
+                           .order(order)
+                           .get()  
+                           
+                           console.log(sqlQuery)
       
       const results = await db.query(sqlQuery.sqlStatement, sqlQuery.values)
 
       if (results.status === 'error') {
-        throw new Error(results.message)
+        return setError(results)
       }
 
       if (results.results.length === 0) {

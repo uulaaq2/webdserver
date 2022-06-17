@@ -67,6 +67,8 @@ const setError = (error) => {
 
     if (showServerDevelopmentErrors) {
         reply.stack = error.stack
+    } else {
+        reply.stack = ''
     }
 
     return reply

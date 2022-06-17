@@ -114,6 +114,14 @@ class SQLQueryBuilder {
             
             return this
         }
+
+        order(order) {
+            if (order) {
+                this.pieces.push(order)
+            }
+
+            return this
+        }
     
         get() {
             let data = {

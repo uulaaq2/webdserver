@@ -13,6 +13,7 @@ router.post('/get', cors(), headers, function(req, res) {
       
       const name = req.body.name
       const orderByFields = req.body.orderByFields
+      const order = req.body.order
       const site = req.body.site
 
       if (!site) {        
@@ -20,7 +21,7 @@ router.post('/get', cors(), headers, function(req, res) {
       }
   
       const groups = new Groups()
-      const getGroupsResult = await groups.getGroups(name, orderByFields, site)
+      const getGroupsResult = await groups.getGroups(name, orderByFields, order, site)
       
       res.send(getGroupsResult)
     } catch (error) {
