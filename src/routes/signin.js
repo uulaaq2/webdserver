@@ -14,10 +14,13 @@ router.post('/', cors(), headers, function(req, res) {
   const signIn = async () => {
     try {
       
+      console.log('bbb')
       const email = req.body.email
       const password = req.body.password
       const rememberMe = req.body.rememberMe
-      const site = req.body.site
+      const site = req.body.site || undefined
+
+      console.log('aaa ', site)
 
       if (!email || !password || rememberMe === undefined) {        
         res.send(setWarning('Missing paramters'))
@@ -28,7 +31,7 @@ router.post('/', cors(), headers, function(req, res) {
       
       res.send(await userSigninResult)
     } catch (error) {
-      res.send(setError(error))
+      res.send(setCustom('error', 'aaa'))      
     }
   }
 

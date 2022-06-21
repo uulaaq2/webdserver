@@ -41,17 +41,16 @@ class User {
                 user: results.results[0]
             }
 
-            let permissionsRawData, permissionsParsed            
-            const sites = results.results[0].Sites.split(',')
-            let localSite
-            if (!site) {
-                localSite = sites[0]
-            } else {
-                localSite = site
-            }
+            if (includePermissions) {                
+                let permissionsRawData, permissionsParsed            
+                const sites = results.results[0].Sites.split(',')
+                let localSite
+                if (!site) {
+                    localSite = sites[0]
+                } else {
+                    localSite = site
+                }
 
-            if (includePermissions) {
-                console.log(config.usersFolderPath + '/' + results.results[0].Email_Address + '/' + localSite + '/permissions.json')
                 permissionsRawData = fs.readFileSync(config.usersFolderPath + '/' + results.results[0].Email_Address + '/' + localSite + '/permissions.json')
                 permissionsParsed = JSON.parse(permissionsRawData)
 
